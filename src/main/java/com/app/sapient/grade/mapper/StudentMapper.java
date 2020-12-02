@@ -24,6 +24,10 @@ public class StudentMapper {
 	}
 	
 	public StudentDto studentToStudentDto(Student student) {
+		return studentToStudentDto(student, true);
+	}
+	
+	public StudentDto studentToStudentDto(Student student, boolean isGradeItemRequired) {
 		if(null == student) {
 			return null;
 		}
@@ -31,7 +35,9 @@ public class StudentMapper {
 		StudentDto studentDto = new StudentDto();
 		studentDto.setId(student.getId());
 		studentDto.setName(student.getName());
-		studentDto.setGradeItemDtos(gradeItemMapper.gradeItemsToGradeItemDtos(student.getGradeItems()));
+		if(isGradeItemRequired) {
+			studentDto.setGradeItemDtos(gradeItemMapper.gradeItemsToGradeItemDtos(student.getGradeItems()));
+		}
 		//studentDto.setGradeAsPercent(gradeStrategy.getGradeAsPercentage());
 		return studentDto;
 	}

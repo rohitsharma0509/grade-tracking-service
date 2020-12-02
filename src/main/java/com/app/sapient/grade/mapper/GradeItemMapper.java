@@ -89,7 +89,7 @@ public class GradeItemMapper {
 		gradeItemDto.setObtainedScore(gradeItem.getObtainedScore());
 		gradeItemDto.setTotalScore(gradeItem.getTotalScore());
 		gradeItemDto.setTeacherId(gradeItem.getTeacherId());
-		gradeItemDto.setStudentDto(studentMapper.studentToStudentDto(gradeItem.getStudent()));
+		gradeItemDto.setStudentDto(studentMapper.studentToStudentDto(gradeItem.getStudent(), false));
 		return gradeItemDto;
 	}
 }
