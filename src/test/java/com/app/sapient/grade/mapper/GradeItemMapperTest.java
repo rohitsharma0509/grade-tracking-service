@@ -95,7 +95,7 @@ public class GradeItemMapperTest {
 		Student student = new Student();
 		student.setId(1L);
 		gradeItem.setStudent(student);
-		Mockito.when(studentMapper.studentToStudentDto(Mockito.any(Student.class))).thenReturn(new StudentDto());
+		Mockito.when(studentMapper.studentToStudentDto(Mockito.any(Student.class), Mockito.eq(false))).thenReturn(new StudentDto());
 		GradeItemDto result = gradeItemMapper.gradeItemToGradeItemDto(gradeItem);
 		Assert.assertEquals(Long.valueOf(1L), result.getId());
 		Mockito.verifyNoInteractions(teacherRepository, studentRepository);

@@ -69,16 +69,23 @@ public class GradeItemMapper {
 	}
 	
 	public List<GradeItemDto> gradeItemsToGradeItemDtos(List<GradeItem> gradeItems) {
+		return gradeItemsToGradeItemDtos(gradeItems, true);
+	}
+	public List<GradeItemDto> gradeItemsToGradeItemDtos(List<GradeItem> gradeItems, boolean isStudentInfoRequired) {
 		if(CollectionUtils.isEmpty(gradeItems)) {
 			return Collections.emptyList();
 		}
 		
 		List<GradeItemDto> gradeItemDtos = new ArrayList<>();
-		gradeItems.stream().forEach(gradeItem -> gradeItemDtos.add(gradeItemToGradeItemDto(gradeItem)));
+		gradeItems.stream().forEach(gradeItem -> gradeItemDtos.add(gradeItemToGradeItemDto(gradeItem, isStudentInfoRequired)));
 		return gradeItemDtos;
 	}
 	
 	public GradeItemDto gradeItemToGradeItemDto(GradeItem gradeItem) {
+		return gradeItemToGradeItemDto(gradeItem, true);
+	}
+			
+	public GradeItemDto gradeItemToGradeItemDto(GradeItem gradeItem, boolean isStudentInfoRequired) {
 		if(null == gradeItem) {
 			return null;
 		}
@@ -89,7 +96,9 @@ public class GradeItemMapper {
 		gradeItemDto.setObtainedScore(gradeItem.getObtainedScore());
 		gradeItemDto.setTotalScore(gradeItem.getTotalScore());
 		gradeItemDto.setTeacherId(gradeItem.getTeacherId());
-		gradeItemDto.setStudentDto(studentMapper.studentToStudentDto(gradeItem.getStudent(), false));
+		if(isStudentInfoRequired) {
+			gradeItemDto.setStudentDto(studentMapper.studentToStudentDto(gradeItem.getStudent(), false));
+		}
 		return gradeItemDto;
 	}
 }

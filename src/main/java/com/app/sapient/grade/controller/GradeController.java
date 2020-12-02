@@ -20,8 +20,7 @@ public class GradeController {
 	
 	@PostMapping(value = "/grades")
 	public ResponseEntity<GradeItemDto> addGradeItem(@RequestBody GradeItemDto gradeItemDto) {
-		if(null == gradeItemDto || null == gradeItemDto.getStudentDto() || null == gradeItemDto.getStudentDto().getId() || 
-				null == gradeItemDto.getTeacherId() || null == gradeItemDto.getObtainedScore()) {
+		if(null == gradeItemDto || null == gradeItemDto.getStudentDto() || null == gradeItemDto.getStudentDto().getId() || null == gradeItemDto.getTeacherId()) {
 			return new ResponseEntity<GradeItemDto>(HttpStatus.BAD_REQUEST);
 		}
 		try {
