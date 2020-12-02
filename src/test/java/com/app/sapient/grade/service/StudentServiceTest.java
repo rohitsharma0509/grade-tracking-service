@@ -3,12 +3,13 @@ package com.app.sapient.grade.service;
 import java.util.Optional;
 
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.app.sapient.grade.dto.StudentDto;
 import com.app.sapient.grade.exception.StudentNotFountException;
@@ -16,7 +17,7 @@ import com.app.sapient.grade.mapper.StudentMapper;
 import com.app.sapient.grade.model.Student;
 import com.app.sapient.grade.repository.StudentRepository;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class StudentServiceTest {
 	
 	@InjectMocks
@@ -41,10 +42,10 @@ public class StudentServiceTest {
 		Assert.assertEquals(Long.valueOf(1L), result.getId());
 	}
 	
-	@Test(expected = StudentNotFountException.class)
+	@Test
 	public void testGetStudentByIdForNoRecord() {
 		Mockito.when(studentRepository.findById(Mockito.eq(1L))).thenReturn(Optional.ofNullable(null));
-		studentService.getStudentById(1L);
+		Assertions.assertThrows(StudentNotFountException.class, () -> studentService.getStudentById(1L));
 	}
 	
 	@Test

@@ -3,12 +3,13 @@ package com.app.sapient.grade.mapper;
 import java.util.Optional;
 
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.app.sapient.grade.dto.GradeItemDto;
 import com.app.sapient.grade.dto.StudentDto;
@@ -20,7 +21,7 @@ import com.app.sapient.grade.model.Teacher;
 import com.app.sapient.grade.repository.StudentRepository;
 import com.app.sapient.grade.repository.TeacherRepository;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class GradeItemMapperTest {
 
 	@InjectMocks
@@ -35,15 +36,15 @@ public class GradeItemMapperTest {
 	@Mock
 	private StudentMapper studentMapper;
 
-	@Test(expected = TeacherNotFoundException.class)
+	@Test
 	public void testGradeItemDtoToGradeItemWhenTeacherNotFound() {
 		Mockito.when(teacherRepository.findById(1L)).thenReturn(Optional.ofNullable(null));
 		GradeItemDto gradeItemDto = new GradeItemDto();
 		gradeItemDto.setTeacherId(1L);
-		gradeItemMapper.gradeItemDtoToGradeItem(gradeItemDto);
+		Assertions.assertThrows(TeacherNotFoundException.class, () -> gradeItemMapper.gradeItemDtoToGradeItem(gradeItemDto));
 	}
 
-	@Test(expected = StudentNotFountException.class)
+	@Test
 	public void testGradeItemDtoToGradeItemWhenStudentNotFound() {
 		Teacher teacher = new Teacher();
 		teacher.setId(1L);
@@ -54,7 +55,7 @@ public class GradeItemMapperTest {
 		StudentDto studentDto = new StudentDto();
 		studentDto.setId(100L);
 		gradeItemDto.setStudentDto(studentDto);
-		gradeItemMapper.gradeItemDtoToGradeItem(gradeItemDto);
+		Assertions.assertThrows(StudentNotFountException.class, () -> gradeItemMapper.gradeItemDtoToGradeItem(gradeItemDto));
 	}
 
 	@Test

@@ -1,15 +1,15 @@
 package com.app.sapient.grade.mapper;
 
 import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.app.sapient.grade.dto.TeacherDto;
 import com.app.sapient.grade.model.Teacher;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class TeacherMapperTest {
 	
 	@InjectMocks
