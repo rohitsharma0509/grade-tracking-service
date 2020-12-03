@@ -13,6 +13,11 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Entity
 @Table(name = "students")
 public class Student {
@@ -29,27 +34,4 @@ public class Student {
 	@JsonIgnore
 	private List<GradeItem> gradeItems;
 
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public List<GradeItem> getGradeItems() {
-		return gradeItems;
-	}
-
-	public void setGradeItems(List<GradeItem> gradeItems) {
-		this.gradeItems = gradeItems;
-	}
 }
