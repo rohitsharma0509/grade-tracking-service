@@ -1,5 +1,8 @@
 package com.app.sapient.grade.mapper;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -89,6 +92,7 @@ public class StudentMapper {
 			finalGrade = finalGrade + ((obtainedExamScore/totalExamScore)*(teacherDto.getExamPercent())/100);
 		}
 		finalGrade = finalGrade * 100;
-		return finalGrade;
+		BigDecimal bd = BigDecimal.valueOf(finalGrade);
+		return bd.setScale(2, RoundingMode.FLOOR).doubleValue();
 	}
 }

@@ -59,5 +59,11 @@ class TeacherServiceTest {
 		TeacherDto result = teacherService.getTeacherById(1L);
 		Assert.assertEquals(Long.valueOf(1L), result.getId());
 	}
+	
+	@Test
+	void testDeleteTeacherByIdForSuccessCase() {
+		teacherService.deleteTeacherById(1L);
+		Mockito.verify(teacherRepository, Mockito.times(1)).deleteById(1L);
+	}
 
 }

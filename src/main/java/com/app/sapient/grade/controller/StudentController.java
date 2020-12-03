@@ -29,7 +29,7 @@ public class StudentController {
 				StudentDto createdStudent = studentService.addStudent(studentDto);
 				return new ResponseEntity<>(createdStudent, HttpStatus.OK);
 			} catch (Exception e) {
-				LOGGER.error("Exception while adding student: ", e.getMessage());
+				LOGGER.error("Exception while adding student: {}", e.getMessage());
 				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}
@@ -42,7 +42,7 @@ public class StudentController {
 			} catch(StudentNotFountException e) {
 				return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 			} catch(Exception e) {
-				LOGGER.error("Exception while getting student details: ", e.getMessage());
+				LOGGER.error("Exception while getting student details: {}", e.getMessage());
 				return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 		}

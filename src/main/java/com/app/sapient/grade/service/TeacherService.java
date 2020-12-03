@@ -34,4 +34,9 @@ public class TeacherService {
 			throw new TeacherNotFoundException();
 		}
 	}
+
+	@Transactional
+	public void deleteTeacherById(Long teacherId) {
+		teacherRepository.deleteById(teacherId);
+	}
 }
