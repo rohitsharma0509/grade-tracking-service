@@ -21,15 +21,15 @@ public class GradeController {
 	@PostMapping(value = "/grades")
 	public ResponseEntity<GradeItemDto> addGradeItem(@RequestBody GradeItemDto gradeItemDto) {
 		if(null == gradeItemDto || null == gradeItemDto.getStudentDto() || null == gradeItemDto.getStudentDto().getId() || null == gradeItemDto.getTeacherId()) {
-			return new ResponseEntity<GradeItemDto>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
 			GradeItemDto createdItem = gradeService.addGradeItem(gradeItemDto);
-			return new ResponseEntity<GradeItemDto>(createdItem, HttpStatus.OK);
+			return new ResponseEntity<>(createdItem, HttpStatus.OK);
 		} catch(TeacherNotFoundException | StudentNotFountException e) {
-			return new ResponseEntity<GradeItemDto>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch(Exception e) {
-			return new ResponseEntity<GradeItemDto>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

@@ -54,7 +54,11 @@ public class StudentMapper {
 	}
 	
 	private Double getFinalGrade(Student student) {
-		Double obtainedAssignmentScore = 0.0, totalAssignmentScore = 0.0, obtainedExamScore = 0.0, totalExamScore = 0.0, finalGrade = 0.0;
+		Double obtainedAssignmentScore = 0.0;
+		Double totalAssignmentScore = 0.0;
+		Double obtainedExamScore = 0.0;
+		Double totalExamScore = 0.0;
+		Double finalGrade = 0.0;
 		int noOfExtraCredit = 0;
 		Long teacherId = 0L;
 		

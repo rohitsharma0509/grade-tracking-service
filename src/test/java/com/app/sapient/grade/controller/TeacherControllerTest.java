@@ -15,7 +15,7 @@ import com.app.sapient.grade.exception.TeacherNotFoundException;
 import com.app.sapient.grade.service.TeacherService;
 
 @ExtendWith(MockitoExtension.class)
-public class TeacherControllerTest {
+class TeacherControllerTest {
 	
 	@InjectMocks
 	private TeacherController teacherController;
@@ -24,7 +24,7 @@ public class TeacherControllerTest {
 	private TeacherService teacherService;
 	
 	@Test
-	public void testConfigureTeacherForSuccessCase() {
+	void testConfigureTeacherForSuccessCase() {
 		TeacherDto teacherDto = new TeacherDto();
 		teacherDto.setId(1L);
 		Mockito.when(teacherService.configureTeacher(Mockito.any(TeacherDto.class))).thenReturn(teacherDto);
@@ -35,7 +35,7 @@ public class TeacherControllerTest {
 
 	
 	@Test
-	public void testConfigureTeacherForException() {
+	void testConfigureTeacherForException() {
 		TeacherDto teacherDto = new TeacherDto();
 		teacherDto.setId(1L);
 		Mockito.when(teacherService.configureTeacher(Mockito.any(TeacherDto.class))).thenThrow(new NullPointerException());
@@ -44,21 +44,21 @@ public class TeacherControllerTest {
 	}
 	
 	@Test
-	public void getTeacherByIdForBadRequest() {
+	void getTeacherByIdForBadRequest() {
 		Mockito.when(teacherService.getTeacherById(Mockito.eq(1L))).thenThrow(new TeacherNotFoundException());
 		ResponseEntity<TeacherDto> result = teacherController.getTeacherById(1L);
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
 	}
 	
 	@Test
-	public void getTeacherByIdForException() {
+	void getTeacherByIdForException() {
 		Mockito.when(teacherService.getTeacherById(Mockito.eq(1L))).thenThrow(new NullPointerException());
 		ResponseEntity<TeacherDto> result = teacherController.getTeacherById(1L);
 		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
 	}
 	
 	@Test
-	public void getTeacherByIdForSuccessCase() {
+	void getTeacherByIdForSuccessCase() {
 		TeacherDto teacherDto = new TeacherDto();
 		teacherDto.setId(1L);
 		Mockito.when(teacherService.getTeacherById(Mockito.eq(1L))).thenReturn(teacherDto);

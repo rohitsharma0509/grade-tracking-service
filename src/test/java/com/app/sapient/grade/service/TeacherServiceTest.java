@@ -18,7 +18,7 @@ import com.app.sapient.grade.model.Teacher;
 import com.app.sapient.grade.repository.TeacherRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class TeacherServiceTest {
+class TeacherServiceTest {
 	
 	@InjectMocks
 	private TeacherService teacherService;
@@ -30,7 +30,7 @@ public class TeacherServiceTest {
 	private TeacherMapper teacherMapper;
 
 	@Test
-	public void testConfigureTeacher() {
+	void testConfigureTeacher() {
 		Teacher teacher = new Teacher();
 		teacher.setId(1L);
 		Mockito.when(teacherMapper.teacherDtoToTeacher(Mockito.any(TeacherDto.class))).thenReturn(teacher);		
@@ -43,13 +43,13 @@ public class TeacherServiceTest {
 	}
 	
 	@Test
-	public void testGetTeacherByIdForNoRecord() {
+	void testGetTeacherByIdForNoRecord() {
 		Mockito.when(teacherRepository.findById(Mockito.eq(1L))).thenReturn(Optional.ofNullable(null));
 		Assertions.assertThrows(TeacherNotFoundException.class, () -> teacherService.getTeacherById(1L));
 	}
 	
 	@Test
-	public void testGetTeacherByIdForSuccessCase() {
+	void testGetTeacherByIdForSuccessCase() {
 		Teacher teacher = new Teacher();
 		teacher.setId(1L);
 		Mockito.when(teacherRepository.findById(Mockito.eq(1L))).thenReturn(Optional.of(teacher));

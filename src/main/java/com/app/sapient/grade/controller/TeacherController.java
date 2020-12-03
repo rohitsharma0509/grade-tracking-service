@@ -23,10 +23,10 @@ public class TeacherController {
 	public ResponseEntity<TeacherDto> configureTeacher(@RequestBody TeacherDto teacherDto) {
 		try {
 			TeacherDto configuredTeacherDto = teacherService.configureTeacher(teacherDto);
-			return new ResponseEntity<TeacherDto>(configuredTeacherDto, HttpStatus.OK);
+			return new ResponseEntity<>(configuredTeacherDto, HttpStatus.OK);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<TeacherDto>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -34,12 +34,12 @@ public class TeacherController {
 	public ResponseEntity<TeacherDto> getTeacherById(@PathVariable("id") Long teacherId) {
 		try {
 			TeacherDto configuredTeacherDto = teacherService.getTeacherById(teacherId);
-			return new ResponseEntity<TeacherDto>(configuredTeacherDto, HttpStatus.OK);
+			return new ResponseEntity<>(configuredTeacherDto, HttpStatus.OK);
 		} catch(TeacherNotFoundException e) {
-			return new ResponseEntity<TeacherDto>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (Exception e) {
 			e.printStackTrace();
-			return new ResponseEntity<TeacherDto>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 

@@ -1,5 +1,7 @@
 package com.app.sapient.grade.mapper;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.Assert;
@@ -22,7 +24,7 @@ import com.app.sapient.grade.repository.StudentRepository;
 import com.app.sapient.grade.repository.TeacherRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class GradeItemMapperTest {
+class GradeItemMapperTest {
 
 	@InjectMocks
 	private GradeItemMapper gradeItemMapper;
@@ -35,17 +37,26 @@ public class GradeItemMapperTest {
 
 	@Mock
 	private StudentMapper studentMapper;
-
+	
 	@Test
-	public void testGradeItemDtoToGradeItemWhenTeacherNotFound() {
+	void testGradeItemsDtoToGradeItemsForNull() {
+		List<GradeItem> result = gradeItemMapper.gradeItemDtosToGradeItems(null);
+		Assert.assertEquals(0, result.size());
+		Mockito.verifyNoInteractions(teacherRepository, studentRepository, studentMapper);
+	}
+	
+	@Test
+	void testGradeItemDtosToGradeItemsWhenTeacherNotFound() {
 		Mockito.when(teacherRepository.findById(1L)).thenReturn(Optional.ofNullable(null));
 		GradeItemDto gradeItemDto = new GradeItemDto();
 		gradeItemDto.setTeacherId(1L);
-		Assertions.assertThrows(TeacherNotFoundException.class, () -> gradeItemMapper.gradeItemDtoToGradeItem(gradeItemDto));
+		List<GradeItemDto> gradeItemDtos = new ArrayList<>();
+		gradeItemDtos.add(gradeItemDto);
+		Assertions.assertThrows(TeacherNotFoundException.class, () -> gradeItemMapper.gradeItemDtosToGradeItems(gradeItemDtos));
 	}
 
 	@Test
-	public void testGradeItemDtoToGradeItemWhenStudentNotFound() {
+	void testGradeItemDtoToGradeItemsWhenStudentNotFound() {
 		Teacher teacher = new Teacher();
 		teacher.setId(1L);
 		Mockito.when(teacherRepository.findById(1L)).thenReturn(Optional.of(teacher));
@@ -55,18 +66,13 @@ public class GradeItemMapperTest {
 		StudentDto studentDto = new StudentDto();
 		studentDto.setId(100L);
 		gradeItemDto.setStudentDto(studentDto);
-		Assertions.assertThrows(StudentNotFountException.class, () -> gradeItemMapper.gradeItemDtoToGradeItem(gradeItemDto));
+		List<GradeItemDto> gradeItemDtos = new ArrayList<>();
+		gradeItemDtos.add(gradeItemDto);
+		Assertions.assertThrows(StudentNotFountException.class, () -> gradeItemMapper.gradeItemDtosToGradeItems(gradeItemDtos));
 	}
 
 	@Test
-	public void testGradeItemDtoToGradeItemForNull() {
-		GradeItem result = gradeItemMapper.gradeItemDtoToGradeItem(null);
-		Assert.assertNull(result);
-		Mockito.verifyNoInteractions(teacherRepository, studentRepository, studentMapper);
-	}
-
-	@Test
-	public void testGradeItemDtoToGradeItemForSuccessCase() {
+	void testGradeItemDtosToGradeItemsForSuccessCase() {
 		Teacher teacher = new Teacher();
 		teacher.setId(1L);
 		Mockito.when(teacherRepository.findById(1L)).thenReturn(Optional.of(teacher));
@@ -78,27 +84,44 @@ public class GradeItemMapperTest {
 		StudentDto studentDto = new StudentDto();
 		studentDto.setId(100L);
 		gradeItemDto.setStudentDto(studentDto);
-		GradeItem result = gradeItemMapper.gradeItemDtoToGradeItem(gradeItemDto);
-		Assert.assertEquals(Long.valueOf(1L), result.getId());
+		List<GradeItemDto> gradeItemDtos = new ArrayList<>();
+		gradeItemDtos.add(gradeItemDto);
+		List<GradeItem> result = gradeItemMapper.gradeItemDtosToGradeItems(gradeItemDtos);
+		Assert.assertEquals(Long.valueOf(1L), result.get(0).getId());
 	}
 	
 	@Test
-	public void testGradeItemToGradeItemDtoForNull() {
-		GradeItemDto result = gradeItemMapper.gradeItemToGradeItemDto(null);
+	void testGradeItemDtoToGradeItemForNull() {
+		GradeItem result = gradeItemMapper.gradeItemDtoToGradeItem(null);
 		Assert.assertNull(result);
 		Mockito.verifyNoInteractions(teacherRepository, studentRepository, studentMapper);
 	}
 	
 	@Test
-	public void testGradeItemToGradeItemDtoForSuccessCase() {
+	void testGradeItemsToGradeItemDtosForNull() {
+		List<GradeItemDto> result = gradeItemMapper.gradeItemsToGradeItemDtos(null);
+		Assert.assertEquals(0, result.size());
+		Mockito.verifyNoInteractions(teacherRepository, studentRepository, studentMapper);
+	}
+	
+	@Test
+	void testGradeItemToGradeItemDtoForNull() {
+		GradeItemDto result = gradeItemMapper.gradeItemToGradeItemDto(null);
+		Assert.assertNull(result);
+	}
+	
+	@Test
+	void testGradeItemsToGradeItemDtosForSuccessCase() {
 		GradeItem gradeItem = new GradeItem();
 		gradeItem.setId(1L);
 		Student student = new Student();
 		student.setId(1L);
 		gradeItem.setStudent(student);
+		List<GradeItem> gradeItems = new ArrayList<>();
+		gradeItems.add(gradeItem);
 		Mockito.when(studentMapper.studentToStudentDto(Mockito.any(Student.class), Mockito.eq(false))).thenReturn(new StudentDto());
-		GradeItemDto result = gradeItemMapper.gradeItemToGradeItemDto(gradeItem);
-		Assert.assertEquals(Long.valueOf(1L), result.getId());
+		List<GradeItemDto> result = gradeItemMapper.gradeItemsToGradeItemDtos(gradeItems);
+		Assert.assertEquals(Long.valueOf(1L), result.get(0).getId());
 		Mockito.verifyNoInteractions(teacherRepository, studentRepository);
 	}
 

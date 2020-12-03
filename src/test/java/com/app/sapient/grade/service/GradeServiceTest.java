@@ -14,7 +14,7 @@ import com.app.sapient.grade.model.GradeItem;
 import com.app.sapient.grade.repository.GradeItemRepository;
 
 @ExtendWith(MockitoExtension.class)
-public class GradeServiceTest {
+class GradeServiceTest {
 	
 	@InjectMocks
 	private GradeService gradeService;
@@ -26,7 +26,7 @@ public class GradeServiceTest {
 	private GradeItemMapper gradeItemMapper;
 
 	@Test
-	public void testAddGradeItem() {
+	void testAddGradeItem() {
 		GradeItem gradeItem = new GradeItem();
 		gradeItem.setId(1L);
 		Mockito.when(gradeItemMapper.gradeItemDtoToGradeItem(Mockito.any(GradeItemDto.class))).thenReturn(gradeItem);		

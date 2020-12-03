@@ -10,19 +10,19 @@ import com.app.sapient.grade.dto.TeacherDto;
 import com.app.sapient.grade.model.Teacher;
 
 @ExtendWith(MockitoExtension.class)
-public class TeacherMapperTest {
+class TeacherMapperTest {
 	
 	@InjectMocks
 	private TeacherMapper teacherMapper;
 
 	@Test
-	public void testTeacherToTeacherDtoForNull() {
+	void testTeacherToTeacherDtoForNull() {
 		TeacherDto result = teacherMapper.teacherToTeacherDto(null);
 		Assert.assertNull(result);
 	}
 	
 	@Test
-	public void testTeacherToTeacherDto() {
+	void testTeacherToTeacherDto() {
 		Teacher teacher = new Teacher();
 		teacher.setId(1L);
 		TeacherDto result = teacherMapper.teacherToTeacherDto(teacher);
@@ -30,13 +30,13 @@ public class TeacherMapperTest {
 	}
 	
 	@Test
-	public void testTeacherDtoToTeacherForNull() {
+	void testTeacherDtoToTeacherForNull() {
 		Teacher result = teacherMapper.teacherDtoToTeacher(null);
 		Assert.assertNull(result);
 	}
 	
 	@Test
-	public void testTeacherDtoToTeacher() {
+	void testTeacherDtoToTeacher() {
 		TeacherDto teacherDto = new TeacherDto();
 		teacherDto.setId(1L);
 		Teacher result = teacherMapper.teacherDtoToTeacher(teacherDto);
