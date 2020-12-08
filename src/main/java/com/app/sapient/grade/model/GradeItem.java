@@ -35,7 +35,7 @@ public class GradeItem {
 	@Column(name = "teacher_id")
 	private Long teacherId;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = { CascadeType.MERGE })
 	@JoinColumn(name = "student_id")
 	private Student student;
 

@@ -14,6 +14,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.app.sapient.grade.dto.TeacherDto;
 import com.app.sapient.grade.exception.TeacherNotFoundException;
 import com.app.sapient.grade.mapper.TeacherMapper;
+//import com.app.sapient.grade.mapper.TeacherMapper;
 import com.app.sapient.grade.model.Teacher;
 import com.app.sapient.grade.repository.TeacherRepository;
 
@@ -33,11 +34,11 @@ class TeacherServiceTest {
 	void testConfigureTeacher() {
 		Teacher teacher = new Teacher();
 		teacher.setId(1L);
-		Mockito.when(teacherMapper.teacherDtoToTeacher(Mockito.any(TeacherDto.class))).thenReturn(teacher);		
+		Mockito.when(teacherMapper.toTeacher(Mockito.any(TeacherDto.class))).thenReturn(teacher);		
 		Mockito.when(teacherRepository.save(Mockito.any(Teacher.class))).thenReturn(teacher);
 		TeacherDto teacherDto = new TeacherDto();
 		teacherDto.setId(1L);
-		Mockito.when(teacherMapper.teacherToTeacherDto(Mockito.any(Teacher.class))).thenReturn(teacherDto);
+		Mockito.when(teacherMapper.toTeacherDto(Mockito.any(Teacher.class))).thenReturn(teacherDto);
 		TeacherDto result = teacherService.configureTeacher(new TeacherDto());
 		Assert.assertEquals(Long.valueOf(1L), result.getId());
 	}
@@ -55,7 +56,7 @@ class TeacherServiceTest {
 		Mockito.when(teacherRepository.findById(Mockito.eq(1L))).thenReturn(Optional.of(teacher));
 		TeacherDto teacherDto = new TeacherDto();
 		teacherDto.setId(1L);
-		Mockito.when(teacherMapper.teacherToTeacherDto(Mockito.any(Teacher.class))).thenReturn(teacherDto);
+		Mockito.when(teacherMapper.toTeacherDto(Mockito.any(Teacher.class))).thenReturn(teacherDto);
 		TeacherDto result = teacherService.getTeacherById(1L);
 		Assert.assertEquals(Long.valueOf(1L), result.getId());
 	}

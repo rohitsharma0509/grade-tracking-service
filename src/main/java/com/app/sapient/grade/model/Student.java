@@ -29,9 +29,9 @@ public class Student {
 	
 	@Column(name="name")
 	private String name;
-	
-	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+
 	@JsonIgnore
+	@OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
 	private List<GradeItem> gradeItems;
 
 }

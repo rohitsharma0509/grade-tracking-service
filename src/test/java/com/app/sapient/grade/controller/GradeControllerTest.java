@@ -29,27 +29,39 @@ class GradeControllerTest {
 		ResponseEntity<GradeItemDto> result = gradeController.addGradeItem(null);
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
 	}
+	
+	@Test
+	void testAddGradeItemForNullTeacherId() {
+		GradeItemDto gradeItemDto = new GradeItemDto();
+		gradeItemDto.setStudentId(1L);
+		ResponseEntity<GradeItemDto> result = gradeController.addGradeItem(gradeItemDto);
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+	}
+	
+	@Test
+	void testAddGradeItemForNullStudentId() {
+		GradeItemDto gradeItemDto = new GradeItemDto();
+		gradeItemDto.setTeacherId(1L);
+		ResponseEntity<GradeItemDto> result = gradeController.addGradeItem(gradeItemDto);
+		Assert.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
+	}
 
 	@Test
 	void testAddGradeItemWhenExceptionOccurs() {
-		Mockito.when(gradeService.addGradeItem(Mockito.any(GradeItemDto.class))).thenThrow(new NullPointerException());
+		Mockito.when(gradeService.addNewGradeItem(Mockito.any(GradeItemDto.class))).thenThrow(new NullPointerException());
 		GradeItemDto gradeItemDto = new GradeItemDto();
 		gradeItemDto.setTeacherId(1L);
-		StudentDto studentDto = new StudentDto();
-		studentDto.setId(100L);
-		gradeItemDto.setStudentDto(studentDto);
+		gradeItemDto.setStudentId(1L);
 		ResponseEntity<GradeItemDto> result = gradeController.addGradeItem(gradeItemDto);
 		Assert.assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, result.getStatusCode());
 	}
 
 	@Test
 	void testAddGradeItemWhenTeacherNotFoundWithGivenTeacherId() {
-		Mockito.when(gradeService.addGradeItem(Mockito.any(GradeItemDto.class))).thenThrow(new TeacherNotFoundException());
+		Mockito.when(gradeService.addNewGradeItem(Mockito.any(GradeItemDto.class))).thenThrow(new TeacherNotFoundException());
 		GradeItemDto gradeItemDto = new GradeItemDto();
 		gradeItemDto.setTeacherId(1L);
-		StudentDto studentDto = new StudentDto();
-		studentDto.setId(100L);
-		gradeItemDto.setStudentDto(studentDto);
+		gradeItemDto.setStudentId(1L);
 		ResponseEntity<GradeItemDto> result = gradeController.addGradeItem(gradeItemDto);
 		Assert.assertEquals(HttpStatus.BAD_REQUEST, result.getStatusCode());
 	}
@@ -59,10 +71,8 @@ class GradeControllerTest {
 		GradeItemDto gradeItemDto = new GradeItemDto();
 		gradeItemDto.setId(1L);
 		gradeItemDto.setTeacherId(1L);
-		StudentDto studentDto = new StudentDto();
-		studentDto.setId(100L);
-		gradeItemDto.setStudentDto(studentDto);
-		Mockito.when(gradeService.addGradeItem(Mockito.any(GradeItemDto.class))).thenReturn(gradeItemDto);
+		gradeItemDto.setStudentId(1L);
+		Mockito.when(gradeService.addNewGradeItem(Mockito.any(GradeItemDto.class))).thenReturn(gradeItemDto);
 		ResponseEntity<GradeItemDto> result = gradeController.addGradeItem(gradeItemDto);
 		Assert.assertEquals(HttpStatus.OK, result.getStatusCode());
 		Assert.assertEquals(Long.valueOf(1L), result.getBody().getId());

@@ -14,22 +14,25 @@ import com.app.sapient.grade.repository.TeacherRepository;
 
 @Service
 public class TeacherService {
-	
-	@Autowired
+
 	private TeacherRepository teacherRepository;
-	
-	@Autowired
 	private TeacherMapper teacherMapper;
-	
+
+	@Autowired
+	public TeacherService(TeacherRepository teacherRepository, TeacherMapper teacherMapper) {
+		this.teacherRepository = teacherRepository;
+		this.teacherMapper = teacherMapper;
+	}
+
 	@Transactional
 	public TeacherDto configureTeacher(TeacherDto teacherDto) {
-		return teacherMapper.teacherToTeacherDto(teacherRepository.save(teacherMapper.teacherDtoToTeacher(teacherDto)));
+		return teacherMapper.toTeacherDto(teacherRepository.save(teacherMapper.toTeacher(teacherDto)));
 	}
-	
+
 	public TeacherDto getTeacherById(Long teacherId) {
 		Optional<Teacher> optionalTeacher = teacherRepository.findById(teacherId);
-		if(optionalTeacher.isPresent()) {
-			return teacherMapper.teacherToTeacherDto(optionalTeacher.get());
+		if (optionalTeacher.isPresent()) {
+			return teacherMapper.toTeacherDto(optionalTeacher.get());
 		} else {
 			throw new TeacherNotFoundException();
 		}

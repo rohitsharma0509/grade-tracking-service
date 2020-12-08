@@ -19,16 +19,20 @@ public class GradeController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(GradeController.class);
 
-	@Autowired
 	private GradeService gradeService;
+	
+	@Autowired
+	public GradeController(GradeService gradeService) {
+		this.gradeService = gradeService;
+	}
 	
 	@PostMapping(value = "/grades")
 	public ResponseEntity<GradeItemDto> addGradeItem(@RequestBody GradeItemDto gradeItemDto) {
-		if(null == gradeItemDto || null == gradeItemDto.getStudentDto() || null == gradeItemDto.getStudentDto().getId() || null == gradeItemDto.getTeacherId()) {
+		if(null == gradeItemDto || null == gradeItemDto.getStudentId() || null == gradeItemDto.getTeacherId()) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		try {
-			GradeItemDto createdItem = gradeService.addGradeItem(gradeItemDto);
+			GradeItemDto createdItem = gradeService.addNewGradeItem(gradeItemDto);
 			return new ResponseEntity<>(createdItem, HttpStatus.OK);
 		} catch(TeacherNotFoundException | StudentNotFountException e) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -27,7 +27,7 @@ public class GradeItemDto {
 	@JsonProperty("teacherId")
 	private Long teacherId;
 	
-	@JsonProperty("studentDto")
-	private StudentDto studentDto;
+	@JsonProperty("studentId")
+	private Long studentId;
 
 }

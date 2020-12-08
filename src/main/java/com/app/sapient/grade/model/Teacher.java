@@ -15,19 +15,18 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Teacher {
-	
+
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "teacher_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "teacher_id")
 	private Long id;
-    
+
 	@Column(name = "assignment")
-	
 	private Double assignmentPercent;
-	
+
 	@Column(name = "exam")
 	private Double examPercent;
-	
+
 	@Column(name = "extra_credit")
 	private Double extraCreditPercent;
 

@@ -21,8 +21,12 @@ public class TeacherController {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(TeacherController.class);
 
-	@Autowired
 	private TeacherService teacherService;
+	
+	@Autowired
+	public TeacherController(TeacherService teacherService) {
+		this.teacherService = teacherService;
+	}
 
 	@PostMapping(value = "/teachers")
 	public ResponseEntity<TeacherDto> configureTeacher(@RequestBody TeacherDto teacherDto) {
